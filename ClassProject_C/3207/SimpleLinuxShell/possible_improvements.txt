@@ -1,0 +1,5 @@
+1. Splitting the built-in commands to another file can be a good idea. I did not do this because the project itself does not require reusable codes and is quite short.
+
+2. There is a small display bug when doing pipe excecution (or background excecution. I do not really remember). It can be due to input/output flush, but I did not know how to fix this at the time. It is entirely cosmetic, and the program still works fine without any problems, but props to anyone who can find the fix for this.
+
+3. I tried to do as much input verification as possible when the program takes in command lines to ensure that nothing crashes. Still, feel free to try and break the program to find more improvements!
