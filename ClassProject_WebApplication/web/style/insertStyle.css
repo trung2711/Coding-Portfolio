@@ -1,0 +1,14 @@
+/* Style the HTML table that shows the tabular database data */
+
+#insertArea {
+    margin-top: 1em;
+    margin-left: 3em;
+    font-family: Impact, Charcoal, sans-serif;
+}
+
+#insertArea td {
+    padding: 8px;
+    font-size:20px;
+}
+
+.error {color:#7B241C; border:none;}

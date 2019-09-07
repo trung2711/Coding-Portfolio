@@ -4,7 +4,7 @@ File System Documentation (Updated for the final Version)
 
 Description: This project is a simple implementation of the linux file system. I have added extensive function testing to the main function to display all of the program's functionality. Comments are also provided in the code.
 
-************************************************************************************UPDATE***********************************************************************************************
+**********************************************************************************UPDATE*************************************************************************
 
 To create, open, delete file, include the path and file name in the functions' parameters. Name must have a '/' at the beginning (e.g. "/testingDir/myFile.txt").
 

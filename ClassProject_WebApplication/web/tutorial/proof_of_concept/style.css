@@ -1,0 +1,152 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Mar 12, 2019, 1:37:24 AM
+    Author     : Trung Nguyen
+*/
+
+* {
+  box-sizing: border-box;
+}
+
+/*Set Div Background Style*/
+.bg {
+    z-index: -1;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    height: 100%;
+    width: 100%;
+    filter: blur(3px);
+    -webkit-filter: blur(3px);
+    background-size: cover;
+}
+
+/* Position the image container */
+#container {
+  position: absolute;
+  width: 640px;
+  height: 440px;
+  z-index: 2;
+  left: 50%;
+  margin: 170px 0 0 -320px;
+  background: rgba(204,153,255,0.3);
+  object-fit: contain;
+}
+
+/* Demo Bar */
+#bar {
+    min-width: 1000px;
+    width: 100%;
+    height: 150px;
+    position: fixed;
+    top: 0px;
+    z-index: 2;
+    background-color: white;
+    box-shadow: 0px 0px 5px black;
+}
+
+/* To center elements */
+.center{
+    display: flex;
+    text-align: center;
+    justify-content: center;
+}
+
+/* The Close Button */
+.close {
+  opacity: 0.5;
+  margin: auto;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  opacity: 1;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* Add a pointer when hovering over the thumbnail images */
+.cursor {
+  cursor: pointer;
+}
+
+/* Next & previous buttons */
+.prev,
+.next {
+  cursor: pointer;
+  position: absolute;
+  height: 100%;
+  width: 20px;
+  color: black;
+  font-weight: bold;
+  font-size: 20px;
+  border-radius: 0 3px 3px 0;
+  padding-top: 55px;
+  padding-right: 5px;
+  padding-left: 5px;
+  z-index: 3;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* Position the "next button" to the right */
+.next {
+  right: 0;
+  border-radius: 3px 0 0 3px;
+}
+
+/* On hover, add a black background color with a little bit see-through */
+.prev:hover,
+.next:hover {
+  background-color: rgba(0, 0, 0, 1);
+  color: white;
+}
+
+.mySlides {
+    padding: 20px 20px 20px 20px;
+    height: 100%; 
+    width: 100%; 
+    object-fit: fill;
+    display: none;
+}
+
+/* Demo image columns */
+.column {
+  float: left;
+  width: 20%;
+  height: 100%;
+}
+
+/* Add a transparency effect for thumnbail images */
+.demo {
+  height: 100%; 
+  width: 100%; 
+  object-fit: fill;
+  padding: 5px 0px;
+  opacity: 0.8;
+  transition: opacity .25s ease-in-out;
+}
+
+.active,
+.demo:hover {
+  opacity: 1;
+  transition: opacity .25s ease-in-out;
+}
+
+#myModal {
+    overflow: auto;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    min-width: 1000px;
+    background: rgba(255,255,255,0.6);
+    display: none;
+}

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+    <head>
+
+        <!-- Use this type of comment within HTML -->
+        <title>1 VS 1 Tournament Portal</title>
+        <link href="style/myStyle.css" rel="stylesheet" type="text/css" />
+        <link href="style/listStyle.css" rel="stylesheet" type="text/css" />
+        <link href="style/insertStyle.css" rel="stylesheet" type="text/css" />
+    </head>
+    <body>
+
+        <div id="titleNav">
+            <div id="pageTitle">
+                <img id="logo" src="pics/logo.jpg" alt="1 vs 1">
+                TOURNAMENT PORTAL
+            </div>
+
+            <div id="nav">
+                <img title="Home" src="pics/dark_home_icon_H24.png" onclick = "ajaxFillId ('htmlPartials/homeContent.html', 'content')" alt="Home" >
+                &nbsp; 
+                <img title="Account"  onclick="toggle('accountDropDown', 100)" src="pics/dark_account_dd_icon_H24.png" alt="Account" >
+                &nbsp;
+                <img title="Search" onclick="toggle('searchDropDown', 60)" src="pics/dark_search_dd_icon_H24b.png" alt="Search" >
+                &nbsp; 
+                <img title="Blog" src="pics/dark_blog_icon_H24.png" onclick = "ajaxFillId ('htmlPartials/blogContent.html', 'content')" alt="Blog" >
+                &nbsp;
+                &nbsp; 
+            </div>
+
+            <!-- Drop Down Menus -->
+            <div class="dropDown" id="searchDropDown">
+                <a onclick = "tournamentCRUD.list('content')">Tournaments</a> <br/>
+                <a onclick = "userCRUD.list('content')">Users</a> <br/>
+                <a onclick = "registrationCRUD.list('content')">Registrations</a>
+            </div>
+
+            <div class="dropDown" id="accountDropDown">
+                <a onclick = "userCRUD.startInsert()">Register</a> <br/>
+                <a onclick = "ajaxFillId ('htmlPartials/logonContent.html', 'content')">Log In</a> <br/>
+                <a onclick = "account.getProfile('content')">Profile</a> <br/>
+                <a onclick = "account.logoff('content')">Log Out</a>
+            </div>  
+
+        </div>  <!-- end of titleNav -->
+        
+
+        <div id="content">
+
+        </div> <!-- content. [[Keep track of nesting]] -->
+        
+        <div id="footer">
+            Trung Viet Nguyen
+        </div>
+        
+        <script src="js/ajax.js"></script>
+        <script src="js/account.js"></script>
+        <script src="js/buildTable.js"></script>
+        <script src="js/userCRUD.js"></script>
+        <script src="js/tournamentCRUD.js"></script>
+        <script src="js/registrationCRUD.js"></script>
+        <script src="js/makePickList.js"></script>
+        
+        <script>
+            ajaxFillId('htmlPartials/homeContent.html', 'content');
+        </script>
+        
+    </body>
+</html>

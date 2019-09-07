@@ -1,0 +1,63 @@
+<div id="insertArea">
+
+    <table>
+        <tr id='tournamentIdRow'>
+            <td>Tournament Id</td>
+            <td><input type="text"  id="tournamentId" disabled="disabled"/></td>
+            <td ></td> 
+        </tr>
+        <tr>
+            <td>Tournament Name</td>
+            <td><input type="text"  id="tournamentName" /></td>
+            <td id="tournamentNameError" class="error"></td> 
+        </tr>
+        <tr>
+            <td>Tournament Capacity</td>
+            <td><input type="text"  id="tournamentCapacity" /></td>
+            <td id="tournamentCapacityError" class="error"></td>
+        </tr>
+        <tr>
+            <td>Tournament Prize</td>
+            <td><input type="text" id="tournamentPrize" /></td>
+            <td id="tournamentPrizeError" class="error"></td>
+        </tr>
+        <tr>
+            <td>Tournament Description</td>
+            <td><textarea name="textarea" style="width:250px;height:150px;" id="tournamentDescription"></textarea></td>
+            <td id="tournamentDescriptionError" class="error"></td> 
+        </tr>
+        <tr>
+            <td>Tournament Date</td>
+            <td><input type="text" id="tournamentDate" /></td>
+            <td id="tournamentDateError" class="error"></td>
+        </tr>
+        <tr>
+            <td>Tournament Time</td>
+            <td><input type="text" id="tournamentTime" /></td>
+            <td id="tournamentTimeError" class="error"></td>
+        </tr>
+        <tr>
+            <td>Tournament Registration Deadline</td>
+            <td><input type="text" id="tournamentRegistrationDeadline" /></td>
+            <td id="tournamentRegistrationDeadlineError" class="error"></td>
+        </tr>
+        <tr>
+            <td>Image URL</td>
+            <td><input type="text" id="imageUrl" /></td>
+            <td id="imageUrlError" class="error"></td>
+        </tr>
+        <tr>
+            <td>Discord URL</td>
+            <td><input type="text" id="discordUrl" /></td>
+            <td id="discordUrlError" class="error"></td>
+        </tr>
+        <tr>
+            <td>
+                <button id="insertSaveTournamentButton" onclick="tournamentCRUD.insertSave()">Insert Save</button>
+                <button id="updateSaveTournamentButton" onclick="tournamentCRUD.updateSave()">Update Save</button>
+            </td>
+            <td id="recordError" class="error"></td>
+            <td></td>
+        </tr>
+    </table>
+</div>

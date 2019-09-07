@@ -1,0 +1,48 @@
+<div id="insertArea">
+
+    <table>
+        <tr>
+            <td>User Email</td>  
+            <td>
+                <select id="userPickList">
+                    <!-- JS code will make ajax call to get all the roles 
+                    then populate this select tag's options with those roles -->
+                </select>
+            </td>
+
+            <td id="userError" class="error"></td>
+        </tr>
+        <tr>
+            <td>Tournament</td>  
+            <td>
+                <select id="tournamentPickList">
+                    <!-- JS code will make ajax call to get all the roles 
+                    then populate this select tag's options with those roles -->
+                </select>
+            </td>
+
+            <td id="tournamentError" class="error"></td>
+        </tr>
+        <tr>
+            <td>Registration Date</td>
+            <td><input type="text"  id="registrationDate" /></td>
+            <td id="dateError" class="error"></td>
+        </tr>
+        <tr>
+            <td>Percentage as Donation</td>
+            <td><input type="text" id="donation" /></td>
+            <td id="donationError" class="error"></td>
+        </tr>
+        <tr>
+            <td>Additional Notes</td>
+            <td><textarea name="textarea" style="width:250px;height:150px;" id="additionalNotes"></textarea></td>
+            <td id="additionalNotesError" class="error"></td> 
+        </tr>
+        <tr>
+            <!-- see js/insertUser.js to see the insertUser function (make sure index.html referencesinvokes the js file) -->
+            <td><button onclick="registrationCRUD.insertSave()">Save</button></td>
+            <td id="recordError" class="error"></td>
+            <td></td>
+        </tr>
+    </table>
+</div>

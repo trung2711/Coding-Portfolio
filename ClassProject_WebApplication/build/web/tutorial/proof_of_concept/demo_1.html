@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Tutorial Demo</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="style.css" rel="stylesheet" type="text/css"/>
+        <link href="demoStyle.css" rel="stylesheet" type="text/css"/>
+    </head>
+    <body>
+        <div class = "frame">
+            <h1>TUTORIAL DEMO</h1>
+            <p>
+                <a href="javascript:history.go(-1)" title="Return to the previous page">&laquo; Return to the previous page</a>
+            </p>
+            <h1>Pop-up Image Slide Show and Background Selection</h1>
+            <p>Welcome to my tutorial page! This tutorial shows you how to create a pop-up slide show and how to set a slide show image to be the background image of your page.</p>
+            <h1>Example Widgets</h1>
+            <p>Before you proceed, you might notice that the background of the page is kind of boring.<br>
+                Click <span class="important" onclick = "slideObject1()">here</span> to create the first pop-up image slide show and choose a background picture!<br>
+                Click <span class="important" onclick = "slideObject2()">here</span> to create the second slide show object and try again!<br>
+                After choosing one of the options above, click on the button below to display the slide show. You can click on the images or the arrow buttons on the navigation bar to change the image that is currently displayed. You can select the X button or click anywhere to close the slide show. Click on the &quot;Set as Background&quot; button inside the slide show to change the background.
+            </p>
+            <div class ="center">
+                <button id ="myBtn">Open Modal</button>
+            </div>
+        </div>
+        <div class="frame">
+            <h1>Inspiration</h1>
+            Websites that provide inspiration to my framework:<br>
+            <a href="https://www.w3schools.com/howto/howto_css_modals.asp">Modal Pop-up</a><br>
+            <a href="https://www.w3schools.com/howto/howto_js_slideshow_gallery.asp">Slideshow Gallery</a><br>
+            <a href="https://www.w3schools.com/cssref/pr_background-image.asp">Background Image</a>
+            <h1>How I wrote this</h1>
+            I took the instruction from w3schools pages and put them together at first. Then, I started to convert HTML code to JavaScript, creating a consumer-provider style. I styled everything in the framework using a separate css file style.css.
+        </div>
+        <div class="frame">
+            <h1>TUTORIAL HOW TO</h1>
+            <p>NOTE: In the Code Pen windows, choose the 0.25x option to view the full screen. The modal will be clipped in the demo view if you don't do so</p>
+            <h1>Creating the basic framework</h1>
+            <p>The basic framework consist of a full-screen div element, which contains a bar at the top and a container at the middle of the screen.</p>
+            <p class="codepen" data-height="350" data-theme-id="0" data-default-tab="css,result" data-user="trung2711" data-slug-hash="EJjvWZ" style="height: 350px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid black; margin: 1em 0; padding: 1em;" data-pen-title="EJjvWZ">
+                <span>See the Pen <a href="https://codepen.io/trung2711/pen/EJjvWZ/">
+                        EJjvWZ</a> by Trung (<a href="https://codepen.io/trung2711">@trung2711</a>)
+                    on <a href="https://codepen.io">CodePen</a>.</span>
+            </p>
+            <h1>Adding images</h1>
+            <p>Now we want to add in the images. Using an input function to get user's path to the image, we record the path to an array and use it to create the slide show.</p>
+            <p class="codepen" data-height="350" data-theme-id="0" data-default-tab="js,result" data-user="trung2711" data-slug-hash="pBJWOp" style="height: 265px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid black; margin: 1em 0; padding: 1em;" data-pen-title="Add in Framework">
+                <span>See the Pen <a href="https://codepen.io/trung2711/pen/pBJWOp/">
+                        Add in Framework</a> by Trung (<a href="https://codepen.io/trung2711">@trung2711</a>)
+                    on <a href="https://codepen.io">CodePen</a>.</span>
+            </p>
+            <h1>Adding buttons</h1>
+            <p>Next, it's time to add in the basic buttons (previous image, next image, close button. Notice that we only add in the buttons at first and have not created any functions for them. We also add some styling to the demo image so that it begins to look nicer.</p>
+            <p class="codepen" data-height="350" data-theme-id="0" data-default-tab="css,result" data-user="trung2711" data-slug-hash="QPbOKr" style="height: 265px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid black; margin: 1em 0; padding: 1em;" data-pen-title="Add in Framework">
+                <span>See the Pen <a href="https://codepen.io/trung2711/pen/QPbOKr/">
+                        Add in Framework</a> by Trung (<a href="https://codepen.io/trung2711">@trung2711</a>)
+                    on <a href="https://codepen.io">CodePen</a>.</span>
+            </p>
+        </div>
+        <div class="frame">
+            <h1>Making the framework fully functional</h1>
+            <p>Now we need to take care of the functionalities. Since this is a pop-up slide show, it should be hidden when created and should only be shown when triggered (clicking on a button). The previous & next button should change the displayed image. Clicking on an image on the bar should also do the trick. We do this by setting buttons' onclick attribute (setAttribute("onclick","etc")) to trigger functions that change the display and .active option for the images in the css file.</p>
+            <p class="codepen" data-height="265" data-theme-id="0" data-default-tab="js,result" data-user="trung2711" data-slug-hash="vMOWRx" style="height: 265px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid black; margin: 1em 0; padding: 1em;" data-pen-title="Add Functionalities">
+                <span>See the Pen <a href="https://codepen.io/trung2711/pen/vMOWRx/">
+                        Add Functionalities</a> by Trung (<a href="https://codepen.io/trung2711">@trung2711</a>)
+                    on <a href="https://codepen.io">CodePen</a>.</span>
+            </p>
+            <h1>To change the background</h1>
+            <p>We let the user put in an id for a div of which they want to change the background. We can manipulate the div's class name and its styling in JavaScript to change its background image. The user can choose to not change the background of any div elements, and the slide show will not include the &quot;Set as Background&quot; button.</p>
+            <p class="codepen" data-height="350" data-theme-id="0" data-default-tab="js,result" data-user="trung2711" data-slug-hash="JVdMJJ" style="height: 347px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid black; margin: 1em 0; padding: 1em;" data-pen-title="Add Functionalities 2">
+                <span>See the Pen <a href="https://codepen.io/trung2711/pen/JVdMJJ/">
+                        Add Functionalities 2</a> by Trung (<a href="https://codepen.io/trung2711">@trung2711</a>)
+                    on <a href="https://codepen.io">CodePen</a>.</span>
+            </p>
+        </div>
+        <div class="frame">
+            <h1>For Consumer</h1>
+            <p>Developer can download the framework <a href="../proof_of_concept.zip">here</a>. It contains the JavaScript file, the CSS file, the demo.html file, and the example images used in the demo.</p> 
+            <p>To use the framework, first include the .js and .css file inside the appropriate tags. Then, call the addImg() function and pass in the path to all the images (you can also call addImgArr() function and pass in a whole array of image paths instead of adding them in one by one).</p>
+            <p>Finally, call the createModal() function and pass in the following parameters (in order): the id of the DOM element used to display the modal; the id of the div element of which you want to change the background; and the height of the demo bar. The last 2 parameters are optional: the set-background button will not be created and the height will be set to a default height if you set both parameters to null.</p>
+            <p>To remove an image from the slide show, the user can call removeImg(PATH_OF_IMG_TO_REMOVE). The user can also clear the entire image array using clearImg() function. After modifying the array, call createModal() again to apply the changes.</p>
+            <p>To change the size of any other elements inside the modal, go to the style.css file and play with the styling. Do this at your own risk (could mess up the modal).</p>
+        </div>
+        <div id="to-pass"></div>
+        <script src="fw.js"></script>
+        <script>
+                    function slideObject1() {
+                        clearImg();
+                        addImg("img_lights.jpg");
+                        addImg("img_mountains.jpg");
+                        addImg("img_nature.jpg");
+                        addImg("img_snow.jpg");
+                        addImg("img_woods.jpg");
+                        createModal('myBtn', 'to-pass', null);
+                    }
+                    function slideObject2() {
+                        clearImg();
+                        addImg("1.jpg");
+                        addImg("2.jpg");
+                        addImg("3.jpg");
+                        addImg("4.jpg");
+                        addImg("5.jpg");
+                        createModal('myBtn', 'to-pass', null);
+                    }
+        </script>
+        <script async src="https://static.codepen.io/assets/embed/ei.js"></script>
+    </body>
+</html>

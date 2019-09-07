@@ -1,0 +1,46 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Feb 10, 2019, 5:14:22 AM
+    Author     : Trung Nguyen
+*/
+/*
+Based on CIS 3308 HW4 Sample Code
+Style the HTML table that shows the tabular database data */
+
+#dataList {
+    margin-top: 1em; 
+}
+
+#dataList h2 {
+    text-align: center;
+    font-size: 30px;
+    font-family: Impact, Charcoal, sans-serif;    
+}
+
+#dataList table {
+    margin:auto;     /* margin:auto makes left and right margins the same, centers the table */
+}
+
+#dataList th, #dataList td {
+    padding: 10px;
+    padding-bottom: 2px;
+}
+
+#dataList td {
+    background-color: #FFFFFF;
+    font-size:13px;
+}
+
+#dataList thead {  /* style of td elements that are inside of a thead element (column headings)) */
+    background-color: #AABBCC;
+}
+
+#dataList th {  /* style of td elements that are inside of a thead element (column headings)) */
+    font-weight: bold;
+    font-size: 16px;
+    padding-top: 8px;
+}
