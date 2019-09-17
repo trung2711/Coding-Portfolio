@@ -9,14 +9,14 @@ containing a seed for the random function and the configurations, then start gen
 events using the appropriate data structures for each component (priority queue for the event input and
 3 FIFO queues for the CPU and Disks). The configurations of the program and the event queue log will be
 written to a log.txt file, and the statistics of the components (average and the maximum size of each
-queue, utilization of each server…) will be displayed to the screen.
+queue, utilization of each serverï¿½) will be displayed to the screen.
 
 Files included in the program:
 
 queue.h: The header file for the queue structure/methods.
 queue.c: Accompanied with queue.h file to be used by the main.c file.
 main.c: Contains the main function and the simulation functions.
-config.txt: containing the configurations for the program (SEED, INIT_TIME, FIN_TIME…).
+config.txt: containing the configurations for the program (SEED, INIT_TIME, FIN_TIMEï¿½).
 log.txt: The result file created by the program.
 
 To compile the file, put all files in a folder and use this command:
@@ -34,11 +34,11 @@ Program Explanation:
 The file queue.c and queue.h contains the queue structures and functions that will be used by
 the main.c file. There are 3 structures inside the queue.h file: queue, node, and event. An event is a
 structure containing an integer for the job number, an array of character for the event description (E.g.:
-“arrives”, “finishes at CPU” …), and an integer for the time that the event occurs. A node is defined to
+ï¿½arrivesï¿½, ï¿½finishes at CPUï¿½ ï¿½), and an integer for the time that the event occurs. A node is defined to
 contain an event and a pointer that links to another node. The implemented queue contains 2 nodes,
-head and tail, along with an integer variable to get the queue’s size. The files also contain the standard
+head and tail, along with an integer variable to get the queueï¿½s size. The files also contain the standard
 functions for the queue data structure (enqueue, dequeue, get size), the constructor functions
-(newEvent, newNode…), and a function to print out the events. To simplify the work, the event queue
+(newEvent, newNodeï¿½), and a function to print out the events. To simplify the work, the event queue
 and component queue share the same data structure. Instead, there are two types of enqueue
 functions: FIFO enqueue and Priority enqueue. The normal FIFO enqueue is used for the CPU and Disks,
 while the Priority enqueue is used for the event queue. The priority enqueue will always place the
@@ -53,5 +53,5 @@ begins to dequeue the event queue until either the queue is empty (should not ha
 finish time) or the finish time FIN_TIME has been reached. For each type of event, a handler function is
 used. The log for the event generating and handling process is written into the log.txt file. During the
 process, the handler functions also keep track of the components statistics by modifying the statistic 
-pointers each time it is called. After the final event “Simulation finishes” has been reached, it will print
+pointers each time it is called. After the final event ï¿½Simulation finishesï¿½ has been reached, it will print
 out the statistics to the screen.
