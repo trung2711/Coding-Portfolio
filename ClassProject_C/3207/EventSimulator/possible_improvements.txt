@@ -1,5 +1,3 @@
 1. I used two very similar functions for Disk1 and Disk2. It could be improved by writing only one function to handle both disks. However, this might require a different variable handling & comparing method from my solution.
 
-2. Less than 500 lines for a code file is normal. However, splitting the data structure (Queue) and its methods from the program's methods is recommeded. I did not do this because I was dumb & lazy, since I knew that it would be enough for the assignment anyway.
-
-3. The QNode struct might not be needed to store event in the queue. At the time I thought it was a nice abstraction, but now I think the program can be simplified if I only used one struct (event) (Still, if you are a recruiter, at least I attempted to use abstraction).
+2. The QNode struct might not be needed to store event in the queue. At the time I thought it was a nice abstraction, but now I think the program can be simplified if I only used one struct (event) (Still, if you are a recruiter, at least I attempted to use abstraction).

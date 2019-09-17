@@ -1,38 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
-#define NUM_PARAMS 12
-#define EVENT_DESCRIPTION 30
-
-typedef struct event{
-    int jobNum;
-    char description[EVENT_DESCRIPTION];
-    int time;
-} event;
-
-typedef struct QNode{
-    struct event *event;
-    struct QNode *next;
-} QNode;
-
-typedef struct queue{
-    struct QNode *head;
-    struct QNode *tail;
-    int size;
-} queue;
-
+#include "queue.h" //Queue header file
 
 //Function prototypes
-struct QNode * newNode(event *k);
-struct queue * createQueue();
-void enqueue (queue *q, event *k);
-struct QNode * dequeue (queue *q);
-struct event * newEvent (int x, char arr[EVENT_DESCRIPTION], int y);
-int size(queue *q);
-void enqueuePriority (queue *q, event *k);
-void printEvent(event *k, FILE *fout);
-
 void simulation(int confVar[NUM_PARAMS], FILE *fout);
 
 void disk1Handler(int confVar[NUM_PARAMS], QNode *toBeProcessed, queue *eventQueue, queue *CPU, queue *disk1, int *CPUIdlePtr, int *Disk1IdlePtr, int *maxCPUPtr, int *totalDisk1Ptr,
@@ -47,6 +18,7 @@ void CPUHandler(int confVar[NUM_PARAMS], QNode *toBeProcessed, queue *eventQueue
                 int *totalCPUResponsePtr, int *totalDisk1ResponsePtr, int *totalDisk2ResponsePtr);
 
 
+//To make accessing arrays easier
 enum {SEED, INIT_TIME, FIN_TIME, ARRIVE_MIN, ARRIVE_MAX, QUIT_PROB, CPU_MIN, CPU_MAX, DISK1_MIN, DISK1_MAX, DISK2_MIN, DISK2_MAX};
 
 int main()
@@ -54,6 +26,7 @@ int main()
     int confVar[NUM_PARAMS] = {};
     const char *conf_types[NUM_PARAMS] = {"SEED", "INIT_TIME", "FIN_TIME", "ARRIVE_MIN" , "ARRIVE_MAX", "QUIT_PROB", "CPU_MIN", "CPU_MAX", "DISK1_MIN", "DISK1_MAX", "DISK2_MIN", "DISK2_MAX"};
 
+    //Opening the input file
     FILE *fin = fopen("config.txt", "r");
 
     if (fin == NULL)
@@ -65,7 +38,7 @@ int main()
     char line[20];
     char search_str[20];
     int i = 0; //get value
-
+    //Scan the appropriate configurations from input file to an array for future use
     while(fgets(line, 20, fin)!= NULL){
             strcpy( search_str, conf_types[i] );
             strcat( search_str, " %d\n" );
@@ -75,16 +48,18 @@ int main()
 
     i = 0;
 
+    //Creating a pointer to the output file
     FILE *fout = fopen("log.txt", "w");
     if (fout == NULL) {
         printf("Cannot open output file \n");
         exit(0);
     }
 
+    //Write the configurations to the log.txt file
     for(;i<NUM_PARAMS;i++){
         fprintf(fout, "%s %s %d\n", conf_types[i], ": ", confVar[i]);
     }
-    simulation(confVar, fout);
+    simulation(confVar, fout); //The simulation function
 
     fclose(fin);
     fclose(fout);
@@ -124,13 +99,16 @@ void simulation(int confVar[NUM_PARAMS], FILE *fout){
     int totalDisk1Response = 0;
     int totalDisk2Response = 0;
 
-    enqueuePriority(eventQueue,newEvent(1,"arrives",0));
+    enqueuePriority(eventQueue,newEvent(1,"arrives",confVar[INIT_TIME])); //Enqueue first event to get everything going
 
+    //The main loop
     while((currentTime < confVar[FIN_TIME])&&(size(eventQueue)>0)){
             QNode *toBeProcessed = dequeue(eventQueue);
             currentTime = toBeProcessed->event->time;
 
+            //Write the most recent event to the disk and handle it
             printEvent(toBeProcessed->event, fout);
+            //Using strcmp(), compare the description to decide which handler function to use
             if(strcmp(toBeProcessed->event->description,"arrives")==0){
                 arrivalHandler(confVar, toBeProcessed, eventQueue, CPU, &CPUIsIdle, &maxCPUSize, &maxCPUResponse, &totalCPUResponse);
             } else if (strcmp(toBeProcessed->event->description,"finishes at CPU")==0){
@@ -144,9 +122,11 @@ void simulation(int confVar[NUM_PARAMS], FILE *fout){
                              &totalDisk2Processes, &maxCPUResponse, &maxDisk2Response, &totalCPUResponse, &totalDisk2Response);
             }
     }
-    fprintf(fout, "%-5d %s\n", confVar[FIN_TIME], "Simulation finishes");
+    fprintf(fout, "%-5d %s\n", confVar[FIN_TIME], "Simulation finishes"); //Write the unique event "Simulation finishes" to the log file
 
+    //Print out all statistics
     printf("%s %d\n", "Max CPU Queue Size: ", maxCPUSize);
+    printf("%s %f\n", "Utilization of CPU: ", (float) totalCPUResponse/(confVar[FIN_TIME]-confVar[INIT_TIME]));
     if(totalCPUProcesses>0){
     printf("%s %d\n", "Average CPU Queue Size: ", totalCPUSize/totalCPUProcesses);
     printf("%s %d\n", "Average CPU Response Time: ", totalCPUResponse/totalCPUProcesses);
@@ -155,10 +135,12 @@ void simulation(int confVar[NUM_PARAMS], FILE *fout){
     printf("%s %d\n", "Average CPU Response Time: ", maxCPUResponse);
     }
     printf("%s %d\n", "Max CPU Response Time: ", maxCPUResponse);
-    printf("%s %d\n\n", "Total CPU Processes: ", totalCPUProcesses);
+    printf("%s %d\n", "Total CPU Processes: ", totalCPUProcesses);
+    printf("%s %f\n\n", "Throughput of CPU: ", (float) totalCPUProcesses/(confVar[FIN_TIME]-confVar[INIT_TIME]));
 
 
     printf("%s %d\n", "Max Disk 1 Queue Size: ", maxDisk1Size);
+    printf("%s %f\n", "Utilization of Disk 1: ", (float) totalDisk1Response/(confVar[FIN_TIME]-confVar[INIT_TIME]));
     if(totalDisk1Processes>0){
     printf("%s %d\n", "Average Disk 1 Queue Size: ", totalDisk1Size/totalDisk1Processes);
     printf("%s %d\n", "Average Disk 1 Response Time: ", totalDisk1Response/totalDisk1Processes);
@@ -167,10 +149,12 @@ void simulation(int confVar[NUM_PARAMS], FILE *fout){
     printf("%s %d\n", "Average Disk 1 Response Time: ", maxDisk1Response);
     }
     printf("%s %d\n", "Max Disk 1 Response Time: ", maxDisk1Response);
-    printf("%s %d\n\n", "Total Disk 1 Processes: ", totalDisk1Processes);
+    printf("%s %d\n", "Total Disk 1 Processes: ", totalDisk1Processes);
+    printf("%s %f\n\n", "Throughput of Disk 1: ", (float) totalDisk1Processes/(confVar[FIN_TIME]-confVar[INIT_TIME]));
 
 
     printf("%s %d\n", "Max Disk 2 Queue Size: ", maxDisk2Size);
+    printf("%s %f\n", "Utilization of Disk 2: ", (float) totalDisk2Response/(confVar[FIN_TIME]-confVar[INIT_TIME]));
     if(totalDisk2Processes>0){
     printf("%s %d\n", "Average Disk 2 Queue Size: ", totalDisk2Size/totalDisk2Processes);
     printf("%s %d\n", "Average Disk 2 Response Time: ", totalDisk2Response/totalDisk2Processes);
@@ -180,6 +164,7 @@ void simulation(int confVar[NUM_PARAMS], FILE *fout){
     }
     printf("%s %d\n", "Max Disk 2 Response Time: ", maxDisk2Response);
     printf("%s %d\n", "Total Disk 2 Processes: ", totalDisk2Processes);
+    printf("%s %f\n\n", "Throughput of Disk 2: ", (float) totalDisk2Processes/(confVar[FIN_TIME]-confVar[INIT_TIME]));
 }
 
 void arrivalHandler(int confVar[NUM_PARAMS],QNode *toBeProcessed, queue *eventQueue, queue *CPU, int *CPUIdlePtr, int *maxCPUPtr, int *CPUResponsePtr, int *totalCPUResponsePtr){
@@ -197,14 +182,14 @@ void arrivalHandler(int confVar[NUM_PARAMS],QNode *toBeProcessed, queue *eventQu
 
     if(currentTime+randomTimeCPU<confVar[FIN_TIME]){
         event *finishedAtCPU = newEvent(toBeProcessed->event->jobNum, "finishes at CPU", currentTime+randomTimeCPU);
-        if(*CPUIdlePtr){
+        if(*CPUIdlePtr){ //If CPU is idle, begin the job right away by enqueueing it to the event queue
             enqueuePriority(eventQueue, finishedAtCPU);
             *CPUIdlePtr=0;
             if (*CPUResponsePtr < randomTimeCPU){
                 *CPUResponsePtr = randomTimeCPU;
             }
             *totalCPUResponsePtr+=randomTimeCPU;
-        } else {
+        } else { //If CPU is busy, enqueue event to CPU queue, and see if the new CPU size is the maximum size
             enqueue(CPU, finishedAtCPU);
             if(*maxCPUPtr<size(CPU)){
                 *maxCPUPtr=size(CPU);
@@ -220,7 +205,7 @@ void CPUHandler(int confVar[NUM_PARAMS], QNode *toBeProcessed, queue *eventQueue
 
     *CPUProcessPtr+=1;
     *totalCPUPtr+=size(CPU);
-
+    //Either the event finishes or is put to a disk
     if(rand()%100+1<confVar[QUIT_PROB]){
         enqueuePriority(eventQueue,newEvent(jobNum, "finishes", time));
     } else {
@@ -265,9 +250,9 @@ void CPUHandler(int confVar[NUM_PARAMS], QNode *toBeProcessed, queue *eventQueue
     }
     }
 
-    if(CPU->size==0){
+    if(CPU->size==0){ //if CPU queue is empty after processing the event, switch the variable to 1 to indicate idleness.
         *CPUIdlePtr=1;
-    } else {
+    } else { //If there is still work to do, dequeue the next event and process it
         event *next = (dequeue(CPU))->event;
         int timeNext = toBeProcessed->event->time;
         int jobNext = next->jobNum;
@@ -289,6 +274,7 @@ void disk1Handler(int confVar[NUM_PARAMS], QNode *toBeProcessed, queue *eventQue
     int time = toBeProcessed->event->time;
     int randomTimeCPU = rand()%(confVar[CPU_MAX]-confVar[CPU_MIN])+confVar[CPU_MIN];
 
+    //put the job back to the CPU
     if(time+randomTimeCPU<confVar[FIN_TIME]){
         event *finishedAtCPU = newEvent(jobNum, "finishes at CPU", time+randomTimeCPU);
         if(*CPUIdlePtr){
@@ -309,6 +295,7 @@ void disk1Handler(int confVar[NUM_PARAMS], QNode *toBeProcessed, queue *eventQue
     *Disk1ProcessPtr+=1;
     *totalDisk1Ptr+=size(disk1);
 
+    //If Disk is idle, switch the variable to 1(idle), otherwise dequeue and process the next event by enqueueing it to the event queue
     if(size(disk1)==0){
         *Disk1IdlePtr = 1;
     } else {
@@ -327,10 +314,7 @@ void disk1Handler(int confVar[NUM_PARAMS], QNode *toBeProcessed, queue *eventQue
     }
 }
 
-//Write readme file
-//Write run file
-//split into 2 files
-
+//Similar to Disk 1 function
 void disk2Handler(int confVar[NUM_PARAMS], QNode *toBeProcessed, queue *eventQueue, queue *CPU, queue *disk2, int *CPUIdlePtr, int *Disk2IdlePtr, int *maxCPUPtr, int *totalDisk2Ptr,
                   int *Disk2ProcessPtr, int *CPUResponsePtr, int *Disk2ResponsePtr, int *totalCPUResponsePtr, int *totalDisk2ResponsePtr){
     int jobNum = toBeProcessed->event->jobNum;
@@ -370,89 +354,5 @@ void disk2Handler(int confVar[NUM_PARAMS], QNode *toBeProcessed, queue *eventQue
     }
 }
 
-void printEvent(event *k, FILE *fout){
-    fprintf(fout,"%-5d %s %-4d %s\n", k->time, "Job", k->jobNum, k->description);
-}
-
-struct event * newEvent (int x, char arr[EVENT_DESCRIPTION], int y){
-    event *temp = (event*)malloc(sizeof(event));
-    temp->jobNum = x;
-    strcpy(temp->description, arr);
-    temp->time = y;
-    return temp;
-}
-
-struct QNode * newNode(event *k){
-    QNode *temp = (QNode*)malloc(sizeof(QNode));
-    temp->event = k;
-    temp->next = NULL;
-    return temp;
-}
-
-struct queue * createQueue()
-{
-    queue *q = (queue*)malloc(sizeof(queue));
-    q->head = q->tail = NULL;
-    q->size = 0;
-    return q;
-}
-
-void enqueuePriority (queue *q, event *k){
-    QNode *temp = newNode(k);
-    if(q->tail==NULL){
-        q->head=q->tail=temp;
-    } else {
-        if(q->head->event->time> temp->event->time){
-        temp->next=q->head;
-        q->head = temp;
-        } else {
-            QNode *prev = q->head;
-            QNode *current = prev->next;
-            while(prev!=NULL&&current!=NULL){
-                if(temp->event->time<current->event->time){
-                    prev->next=temp;
-                    temp->next=current;
-                    q->size++;
-                    return;
-                } else {
-                    prev = prev->next;
-                    current = prev->next;
-                }
-            }
-            q->tail->next=temp;
-            q->tail=temp;
-        }
-    }
-    q->size++;
-}
-
-int size(queue *q){
-    return q->size;
-}
-
-void enqueue (queue *q, event *k){
-    struct QNode *temp = newNode(k);
-    if(q->tail==NULL){
-        q->head=q->tail=temp;
-    } else {
-        q->tail->next=temp;
-        q->tail=temp;
-    }
-    q->size++;
-}
-
-struct QNode * dequeue (queue *q) {
-    if(q->head==NULL){
-        return NULL;
-    }
-    QNode *temp = q->head;
-    q->head = q->head->next;
-
-    if (q->head == NULL){
-       q->tail = NULL;
-    }
-    q->size--;
-    return temp;
-}
 
 
